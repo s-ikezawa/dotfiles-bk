@@ -1,0 +1,4 @@
+if type brew &>/dev/null; then
+  # homebrew
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
