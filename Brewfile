@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 brew "chezmoi"
+brew "mise"
 brew "neovim"
 brew "ripgrep"
 brew "starship"
