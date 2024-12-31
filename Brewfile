@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 brew "chezmoi"
 brew "neovim"
+brew "ripgrep"
 brew "starship"
 cask "1password"
 cask "1password-cli"
