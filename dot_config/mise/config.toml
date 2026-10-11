@@ -217,6 +217,19 @@ herdr = "latest"
 # XDG_STATE_HOME を見る(未設定なら ~/.local/state)。.zshenv で設定済みなので追加は要らない。
 "aqua:k1LoW/mo" = "latest"
 
+# git-surgeon。hunk 単位の stage / unstage / discard / commit や、コミットの分割・統合・
+# 書き換えを対話プロンプトなしで行う。AI エージェントに git の変更を細かく扱わせるためのもの。
+#
+# mise のレジストリにも aqua のレジストリにも無い(`mise registry git-surgeon` が空、
+# aquaproj/aqua-registry に pkgs/raine/git-surgeon が無い)ので github バックエンドで入れる。
+# リリースに git-surgeon-darwin-arm64.tar.gz などが並んでおり、そのまま拾える。
+# 取得時の検証は GitHub API が返すアセットの digest で行われ、upstream が並べている
+# .sha256 と同じ値(v0.1.17 で確認)。upstream は Homebrew tap も案内しているが、mise で揃える。
+#
+# 自己更新の `git-surgeon update` は使わない(herdr と同じく mise の installs/ の下を
+# 書き換えて食い違う)。更新は `mise run up` で行う。
+"github:raine/git-surgeon" = "latest"
+
 # コンテナ。Docker Desktop は使わず、colima が lima で建てた Linux VM の中で docker の
 # デーモンを動かし、ホストからは docker CLI で話す。
 #
