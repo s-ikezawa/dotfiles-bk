@@ -303,6 +303,10 @@ macos-x64 = { url = "https://download.jetbrains.com/language-server/kotlin-serve
 
 "brew:chezmoi" = { os = "macos" }
 
+# git。/usr/bin/git(Apple Git)は Xcode の更新に合わせてしか上がらないので、新しい版を入れる。
+# mise のレジストリに無いので Homebrew の formula を使う。
+"brew:git" = { os = "macos" }
+
 # xcode-build-server。.xcodeproj/.xcworkspace と sourcekit-lsp の橋渡しをする
 # Build Server Protocol の実装。プロジェクト直下に buildServer.json を作ると、
 # sourcekit-lsp(Xcode 同梱)が Xcode のビルド設定を使って解析できるようになる。
