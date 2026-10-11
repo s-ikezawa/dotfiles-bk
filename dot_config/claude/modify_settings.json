@@ -45,4 +45,8 @@ printf '%s\n' "$current" | /usr/bin/jq '
   | .env.CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1"
   # 入力欄に次のプロンプトの候補を出さない。
   | .env.CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION = "false"
+  # 普段の作業は Sonnet で行い、判断の要所だけ Opus を advisor として相談させる。
+  # /model や /advisor で選び直しても、chezmoi apply のたびにここへ戻る。
+  | .model = "sonnet"
+  | .advisorModel = "opus"
 '
