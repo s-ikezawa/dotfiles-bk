@@ -260,6 +260,20 @@ mkdir -p "$plugins"
 ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-compose" "$plugins/docker-compose"
 ''' }
 
+# buildx。BuildKit を使う `docker buildx` の CLI プラグインで、compose と同じく別配布。
+# docker-cli には同梱されず、無いと `docker build` が非推奨のレガシービルダーに落ちる。
+#
+# mise のレジストリには無い(`mise registry docker-buildx` が tool not found)ので、
+# バックエンドを明示する。aqua に定義があり(pkgs/docker/buildx)、sha256 と cosign で検証される
+# (`mise tool aqua:docker/buildx` の Security 欄)。aqua 版は実体を
+# docker-cli-plugin-docker-buildx という名前で置くので、リンク名の docker-buildx とは別名になる。
+# symlink の張り方と DOCKER_CONFIG の補い方は compose と同じ。
+"aqua:docker/buildx" = { version = "latest", postinstall = '''
+plugins="${DOCKER_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/docker}/cli-plugins"
+mkdir -p "$plugins"
+ln -sfn "$MISE_TOOL_INSTALL_PATH/docker-cli-plugin-docker-buildx" "$plugins/docker-buildx"
+''' }
+
 # Kotlin の公式 LSP(JetBrains)。IntelliJ 本体と JBR を同梱するので DL 344 MB・展開後 1.1 GB。
 #
 # 配布物は JetBrains の CDN にしかない(GitHub リリースのアセットは 0 個で、リリース本文から
