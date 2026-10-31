@@ -1,0 +1,53 @@
+# git のグローバル設定。chezmoi が ~/.config/git/config として配置する。
+# ~/.gitconfig は作らないこと。両方あると両方読まれて同じキーは ~/.gitconfig が勝ち、
+# git config --global の書き込み先も ~/.gitconfig になる(git help config の FILES / --global)。
+#
+# ここに書かないもの:
+#   - core.editor        VISUAL / EDITOR を .zshenv で設定しており、git はそれを見る。
+#   - credential.helper  Homebrew の git のシステム設定(/opt/homebrew/etc/gitconfig)に
+#                        osxkeychain が入っている(2.56.0 で確認)。
+#   - core.excludesfile  未設定なら ~/.config/git/ignore が読まれる。設定すると読まれなくなる。
+#   - push.default       simple が Git 2.0 からの既定。
+#   - pull.rebase        未設定なら git pull は --ff-only 扱いで、ブランチが分岐していると
+#                        マージもリベースもせずに止まる(2.56.0 の git help pull で確認)。
+
+[user]
+	name = Shinichi Ikezawa
+	email = shinichi@ikezawa.tech
+
+[init]
+	# 未設定だと git init のたびに既定ブランチ名の案内が出る。
+	defaultBranch = main
+
+[core]
+	# 日本語のファイル名を "\343\201\202" のような 8 進エスケープではなくそのまま表示する。
+	quotepath = false
+
+[branch]
+	# git branch を最近コミットした順に並べる。
+	sort = -committerdate
+
+[diff]
+	# 既定の myers よりも、コードを動かしたときの差分が読みやすくなる。
+	algorithm = histogram
+
+[merge]
+	# コンフリクトの印に、両側の変更に加えて元(共通の祖先)の内容も出す。
+	conflictstyle = zdiff3
+
+[push]
+	# 新しいブランチの初回 push で -u(--set-upstream)を付けなくて済むようにする。
+	autoSetupRemote = true
+
+[fetch]
+	# リモートで消えたブランチの追跡ブランチ(origin/xxx)を fetch のときに消す。
+	prune = true
+
+[rebase]
+	# 作業中の変更があっても rebase できるよう、前後で自動的に stash / pop する。
+	autoStash = true
+	# git commit --fixup / --squash で作ったコミットを rebase -i で自動的に並べ替える。
+	autoSquash = true
+	# rebase したブランチの途中を指している別のブランチも一緒に動かす。
+	# スタックした PR(gh stack)の下のブランチを rebase したときに、上が置いていかれない。
+	updateRefs = true
